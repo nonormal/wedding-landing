@@ -28,7 +28,7 @@ export default function Hero() {
     const [s, setS] = useState<Settings | null>(null);
 
     // chọn URL theo màn hình
-    const bgUrl = (isMobile ? (heroMobile || heroDesktop) : (heroDesktop || heroMobile)) ?? "/hero-fallback.jpg";
+    const bgUrl = (isMobile ? (heroMobile || heroDesktop) : (heroDesktop || heroMobile)) ?? "/hero-fallback.png";
 
     useEffect(() => {
         const loadPhotos = async () => {
@@ -74,7 +74,7 @@ export default function Hero() {
     }, []);
 
     const names =
-        s?.groom || s?.bride ? `${s?.NgocSon ?? s?.groom ?? ""} & ${s?.ThanhThuy ?? s?.bride ?? ""}`.trim()
+        s?.groom || s?.bride ? `${s?.bride ?? s?.groom ?? ""} & ${s?.groom ?? s?.bride ?? ""}`.trim()
             : "Cô dâu & Chú rể";
 
     const metaLine =

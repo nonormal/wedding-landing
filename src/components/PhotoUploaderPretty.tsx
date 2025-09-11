@@ -6,7 +6,6 @@ import ImageCropModal from "@/components/ImageCropModal";
 import type { Area as CropArea } from "react-easy-crop";
 import { getCroppedBlobFromFile } from "@/lib/cropImage";
 
-/* Nén ảnh (tôn trọng EXIF) */
 async function compressImage(
     fileOrBlob: File | Blob,
     {
@@ -49,12 +48,10 @@ export default function PhotoUploaderPretty({ defaultGroup = "free" }: Props) {
     const [progress, setProgress] = useState<number | null>(null);
     const [msg, setMsg] = useState<string | null>(null);
 
-    // crop states
     const [cropOpen, setCropOpen] = useState(false);
-    const [dataUrl, setDataUrl] = useState<string>("");   // chỉ để hiển thị
-    const [rawFile, setRawFile] = useState<File | null>(null); // GIỮ FILE GỐC
+    const [dataUrl, setDataUrl] = useState<string>("");
+    const [rawFile, setRawFile] = useState<File | null>(null);
 
-    // mở modal crop
     async function openCrop(files: FileList | null) {
         const file = files?.[0];
         if (!file) return;
@@ -118,7 +115,6 @@ export default function PhotoUploaderPretty({ defaultGroup = "free" }: Props) {
         if (!rawFile) return;
         try {
             setMsg(null);
-            // ✅ CẮT TRỰC TIẾP TỪ FILE GỐC (đúng EXIF/pixel)
             const croppedBlob = await getCroppedBlobFromFile(rawFile, area);
             await uploadBlobToStorage(croppedBlob);
         } catch (e: any) {
@@ -131,7 +127,6 @@ export default function PhotoUploaderPretty({ defaultGroup = "free" }: Props) {
         if (!rawFile) return;
         try {
             setMsg(null);
-            // ✅ TẢI LÊN TRỰC TIẾP KHÔNG CROP
             await uploadBlobToStorage(rawFile);
         } catch (e: any) {
             setProgress(null);

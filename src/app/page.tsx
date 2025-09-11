@@ -7,6 +7,7 @@ import GalleryMasonry from "@/components/gallery/GalleryMasonry";
 import Testimonials from "@/components/section/Testimonials";
 import CTA from "@/components/section/CTA";
 import Footer from "@/ui/custom/Footer";
+import Gallery from "@/components/gallery/Gallery";
 
 export default function Page() {
     return (
@@ -17,6 +18,7 @@ export default function Page() {
                 <Intro />
                 <InfoCards />
                 <GalleryMasonry />
+                <Gallery />
                 <Testimonials />
                 <CTA />
                 <Footer />

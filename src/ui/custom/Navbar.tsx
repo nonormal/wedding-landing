@@ -4,9 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 
 const GROUPS = [
-    { key: "cover",         label: "Ảnh bìa" },
-    { key: "cover_mobile",  label: "Ảnh bìa mobile" },
-    { key: "free",          label: "Ảnh tự do" },
+    { key: "free",          label: "Nhà Hát Thành Phố" },
     { key: "concept1",      label: "Concept 1" },
     { key: "concept2",      label: "Concept 2" },
     { key: "traditional",   label: "Ảnh cổ phục" },

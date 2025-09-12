@@ -7,8 +7,8 @@ import { supabase } from "@/lib/supabaseClient";
 type Settings = {
     bride: string | null;
     groom: string | null;
-    date: string | null;       // yyyy-mm-dd
-    start_time: string | null; // HH:MM
+    date: string | null;
+    start_time: string | null;
     venue: string | null;
     address: string | null;
     map_url: string | null;
@@ -37,7 +37,7 @@ export default function SettingsForm() {
         }
     };
 
-    useEffect(() => { load(); /* eslint-disable-next-line */ }, []);
+    useEffect(() => { load();}, []);
 
     const onSubmit = async (v: Settings) => {
         setMsg(null);

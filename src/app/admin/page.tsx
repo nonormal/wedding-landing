@@ -1,6 +1,5 @@
 "use client";
 import AdminCard from "@/components/admin/AdminCard";
-// thay 3 dòng dưới bằng component thật của bạn:
 import PhotoUploaderPretty from "@/components/PhotoUploaderPretty";
 import SettingsPretty from "@/components/SettingsPretty";
 import PhotosGrid from "@/components/PhotosGrid";

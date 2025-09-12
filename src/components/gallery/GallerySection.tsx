@@ -20,7 +20,6 @@ export default function GallerySection({
     const [index, setIndex] = useState(0);
     const containerRef = useRef<HTMLDivElement | null>(null);
 
-    // reset index khi đổi group
     useEffect(() => {
         setIndex(0);
     }, [count]);
@@ -35,7 +34,6 @@ export default function GallerySection({
         setIndex((i) => (i + 1) % count);
     }, [count]);
 
-    // swipe (mobile)
     useEffect(() => {
         const el = containerRef.current;
         if (!el) return;
@@ -73,10 +71,9 @@ export default function GallerySection({
     return (
         <div className="space-y-4">
             {title ? (
-                <h3 className="text-center text-xl font-semibold">{title}</h3>
+                <h3 className="font-serif text-3xl md:text-4xl text-center mb-6">{title}</h3>
             ) : null}
 
-            {/* Preview */}
             <div
                 ref={containerRef}
                 className="relative mx-auto w-full max-w-5xl overflow-hidden rounded-2xl bg-black"
@@ -114,7 +111,6 @@ export default function GallerySection({
                 )}
             </div>
 
-            {/* Thumbnails */}
             {count > 1 && (
                 <div className="mx-auto flex max-w-5xl items-center gap-3 px-4">
                     {safePhotos.map((p, i) => (

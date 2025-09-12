@@ -23,18 +23,16 @@ export default function PhotoUploader() {
                 .upload(path, file, { cacheControl: "3600", upsert: false });
             if (upErr) throw upErr;
 
-            // 2) lấy public URL
             const { data: pub } = supabase.storage.from("photos").getPublicUrl(path);
             const publicUrl = pub.publicUrl;
 
-            // 3) ghi vào bảng photos
             const { error: dbErr } = await supabase
                 .from("photos")
                 .insert({ url: publicUrl, caption: null, order_index: 0 });
             if (dbErr) throw dbErr;
 
             setMsg("Đã upload thành công!");
-            e.target.value = ""; // reset input
+            e.target.value = "";
         } catch (err: any) {
             setMsg(err.message ?? "Lỗi upload");
         } finally {

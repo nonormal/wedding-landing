@@ -9,7 +9,7 @@ import {
     DragStartEvent,
     PointerSensor,
     closestCenter,
-    useDroppable,            // <-- quan trọng: để container nhóm nhận thả
+    useDroppable,
     useSensor,
     useSensors,
 } from "@dnd-kit/core";
@@ -21,7 +21,6 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-/* ------------------------- Types & constants ------------------------- */
 
 type Photo = {
     id: string;
@@ -39,9 +38,9 @@ const GROUPS: { key: Photo["group_name"]; label: string }[] = [
     { key: "concept2",    label: "Nhóm ảnh concept 2" },
     { key: "traditional", label: "Nhóm ảnh cổ phục" },
     { key: "album",       label: "Nhóm ảnh album" },
+    { key: "wedding", label: "Bộ ảnh cưới" },
 ];
 
-/* ------------------------- Helpers ------------------------- */
 
 function extractStoragePath(publicUrl: string) {
     const i = publicUrl.indexOf("/storage/v1/object/public/photos/");
@@ -49,7 +48,6 @@ function extractStoragePath(publicUrl: string) {
     return publicUrl.substring(i + "/storage/v1/object/public/photos/".length);
 }
 
-/* ------------------------- Sortable item ------------------------- */
 
 function SortableItem({
                           photo,
@@ -71,10 +69,9 @@ function SortableItem({
         <div
             ref={setNodeRef}
             style={style}
-            {...attributes}        // GIỮ attributes cho sortable
+            {...attributes}
             className="group relative h-44 w-40 overflow-hidden rounded-2xl border bg-white"
         >
-            {/* Tay cầm kéo riêng, chỉ phần này nhận listeners */}
             <div
                 {...listeners}
                 className="absolute left-2 top-2 z-10 rounded bg-white/80 px-2 py-1 text-[10px] font-medium shadow cursor-grab active:cursor-grabbing"
@@ -93,8 +90,8 @@ function SortableItem({
                 <button
                     className="rounded-full bg-red-600 px-3 py-1 text-xs text-white"
                     onClick={(e) => {
-                        e.preventDefault();   // tránh drag
-                        e.stopPropagation();  // tránh bubble
+                        e.preventDefault();
+                        e.stopPropagation();
                         onRemove(photo);
                     }}
                 >
@@ -105,8 +102,6 @@ function SortableItem({
     );
 }
 
-
-/* ------------------------- Group container (droppable) ------------------------- */
 
 function GroupContainer({
                             groupKey,
@@ -128,7 +123,6 @@ function GroupContainer({
     );
 }
 
-/* ------------------------- Main board ------------------------- */
 
 export default function PhotosGrid() {
     const [items, setItems] = useState<Photo[]>([]);
@@ -163,11 +157,9 @@ export default function PhotosGrid() {
         return map;
     }, [items]);
 
-    /* ---------- Batch persist: upsert toàn bộ thay đổi ---------- */
     async function persistBatch(newState: Photo[]) {
         setItems(newState);
 
-        // Chuẩn hoá: trong mỗi group, đánh lại order_index 0..n
         const updates: { id: string; group_name: string; order_index: number }[] = [];
         for (const { key } of GROUPS) {
             const list = newState
@@ -180,7 +172,6 @@ export default function PhotosGrid() {
             list.forEach((p, i) => updates.push({ id: p.id, group_name: key, order_index: i }));
         }
 
-        // Chia nhỏ để update song song (tránh quá nhiều request 1 lúc)
         const CHUNK = 30;
         try {
             for (let i = 0; i < updates.length; i += CHUNK) {
@@ -200,13 +191,11 @@ export default function PhotosGrid() {
         }
     }
 
-    /* ---------- drag handlers: reorder + cross-group move ---------- */
 
     function onDragStart(e: DragStartEvent) {
         setActiveId(String(e.active.id));
     }
 
-    // UX: khi rê qua group khác thì gán tạm group để user thấy "đang ở hàng đó"
     function onDragOver(e: DragOverEvent) {
         const { active, over } = e;
         if (!over) return;
@@ -237,7 +226,6 @@ export default function PhotosGrid() {
         const aId = String(active.id);
         const oId = String(over.id);
 
-        // 1) Thả vào container rỗng (group:*): chuyển group & đẩy về cuối nhóm
         if (oId.startsWith("group:")) {
             const g = oId.replace("group:", "");
             const movedState = items.map((p) =>
@@ -249,7 +237,6 @@ export default function PhotosGrid() {
             return;
         }
 
-        // 2) Thả lên 1 ảnh khác
         const from = items.find((p) => p.id === aId);
         const to = items.find((p) => p.id === oId);
         if (!from || !to) return;
@@ -257,7 +244,6 @@ export default function PhotosGrid() {
         const sameGroup = from.group_name === to.group_name;
 
         if (sameGroup) {
-            // reorder trong cùng nhóm
             const g = from.group_name;
             const list = items.filter((p) => p.group_name === g);
             const oldIndex = list.findIndex((i) => i.id === from.id);
@@ -269,7 +255,7 @@ export default function PhotosGrid() {
             ];
             await persistBatch(newState);
         } else {
-            // chuyển nhóm + chèn vào vị trí của "to"
+
             const targetList = items.filter((p) => p.group_name === to.group_name);
             const insertAt = targetList.findIndex((i) => i.id === to.id);
 
@@ -290,7 +276,6 @@ export default function PhotosGrid() {
         }
     }
 
-    /* ------------------------- remove ------------------------- */
 
     async function remove(p: Photo) {
         if (!confirm("Xoá ảnh này?")) return;
@@ -303,7 +288,6 @@ export default function PhotosGrid() {
         load();
     }
 
-    /* ------------------------- UI ------------------------- */
 
     return (
         <div className="space-y-6">
@@ -322,7 +306,6 @@ export default function PhotosGrid() {
                         <section key={g.key} className="space-y-2">
                             <h3 className="text-sm font-semibold uppercase tracking-wide">{g.label}</h3>
 
-                            {/* Container droppable thật sự cho group */}
                             <GroupContainer groupKey={g.key}>
                                 <SortableContext
                                     items={list.map((p) => p.id)}

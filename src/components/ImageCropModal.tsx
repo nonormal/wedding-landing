@@ -44,13 +44,11 @@ export default function ImageCropModal({ src, open, onClose, onDone }: Props) {
 
     return (
         <Portal>
-            {/* Backdrop + container luôn nổi trên cùng */}
             <div className="fixed inset-0 z-[9999]">
                 <div className="absolute inset-0 bg-black/60" onClick={onClose} />
 
                 <div className="absolute inset-0 grid place-items-center pointer-events-none">
                     <div className="w-[92vw] max-w-[780px] rounded-2xl bg-white shadow-2xl overflow-hidden pointer-events-auto">
-                        {/* Vùng cropper */}
                         <div className="relative h-[60vh] bg-black">
                             {src && (
                                 <Cropper
@@ -66,7 +64,6 @@ export default function ImageCropModal({ src, open, onClose, onDone }: Props) {
                             )}
                         </div>
 
-                        {/* Controls */}
                         <div className="p-4 flex flex-wrap items-center gap-3">
                             <label className="text-sm">Tỉ lệ:</label>
                             <select
@@ -89,7 +86,6 @@ export default function ImageCropModal({ src, open, onClose, onDone }: Props) {
                                     Huỷ
                                 </button>
 
-                                {/* NEW: tải ảnh gốc không crop */}
                                 <button
                                     className="rounded-full px-4 py-2 border border-neutral-300"
                                     onClick={() => onDone("direct")}

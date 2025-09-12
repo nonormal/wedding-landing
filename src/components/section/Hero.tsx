@@ -74,7 +74,7 @@ export default function Hero() {
     }, []);
 
     const names =
-        s?.groom || s?.bride ? `${s?.bride ?? s?.groom ?? ""} & ${s?.groom ?? s?.bride ?? ""}`.trim()
+        s?.groom || s?.bride ? `${s?.groom ?? s?.bride ?? ""} & ${s?.bride ?? s?.groom ?? ""}`.trim()
             : "Cô dâu & Chú rể";
 
     const metaLine =

@@ -8,12 +8,12 @@ const SITE_URL =
 export const metadata = {
     metadataBase: new URL(SITE_URL), // rất quan trọng để Next tạo URL tuyệt đối
     title: "Thiệp Cưới",
-    description: "Thiệp cưới online của chúng mình 💍",
+    description: "Thiệp cưới online của Ngọc Sơn & Thanh Thúy 💍",
     openGraph: {
         type: "website",
         url: "/",
         title: "Thiệp Cưới",
-        description: "Thiệp cưới online của chúng mình 💍",
+        description: "Thiệp cưới online của Ngọc Sơn & Thanh Thúy 💍",
         images: [
             {
                 url: "/hero-fallback.png", // sẽ thành https://domain/hero-fallback.png

@@ -1,4 +1,4 @@
-"use client";
+// src/app/page.tsx
 import Navbar from "@/ui/custom/Navbar";
 import Hero from "@/components/section/Hero";
 import Intro from "@/components/section/Intro";
@@ -8,6 +8,8 @@ import Testimonials from "@/components/section/Testimonials";
 import CTA from "@/components/section/CTA";
 import Footer from "@/ui/custom/Footer";
 import Gallery from "@/components/gallery/Gallery";
+
+export const dynamic = "force-static"; // hoặc: export const revalidate = 3600;
 
 export default function Page() {
     return (

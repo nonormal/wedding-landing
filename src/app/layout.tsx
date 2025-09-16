@@ -1,44 +1,37 @@
+// src/app/layout.tsx
 import "./globals.css";
 import Providers from "./providers";
-import type { Metadata } from "next";
-
 
 const SITE_URL =
-    (process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/+$/, "")) || "http://localhost:3000";
-const OG_IMAGE = `${SITE_URL}/hero_preview.jpg`;
+    process.env.NEXT_PUBLIC_SITE_URL || "https://wedding-son-thuy.vercel.app";
 
-export const metadata: Metadata = {
-    metadataBase: new URL(SITE_URL),
-    title: {
-        default: "Thiệp Cưới",
-        template: "%s · Thiệp Cưới",
-    },
+export const metadata = {
+    metadataBase: new URL(SITE_URL), // rất quan trọng để Next tạo URL tuyệt đối
+    title: "Thiệp Cưới",
     description: "Thiệp cưới online của chúng mình 💍",
     openGraph: {
+        type: "website",
+        url: "/",
         title: "Thiệp Cưới",
-        description: "Mời bạn xem thiệp cưới online của chúng mình 💍",
-        url: SITE_URL,
-        siteName: "Thiệp Cưới",
+        description: "Thiệp cưới online của chúng mình 💍",
         images: [
             {
-                url: OG_IMAGE,
+                url: "/hero-fallback.png", // sẽ thành https://domain/hero-fallback.png
                 width: 1200,
                 height: 630,
-                alt: "Thiệp cưới của chúng mình",
+                alt: "Thiệp Cưới",
             },
         ],
-        type: "website",
-        locale: "vi_VN",
     },
     twitter: {
         card: "summary_large_image",
         title: "Thiệp Cưới",
-        description: "Mời bạn xem thiệp cưới online của chúng mình 💍",
-        images: [OG_IMAGE],
+        description: "Thiệp cưới online của Ngọc Sơn & Thanh Thúy 💍",
+        images: ["/hero-preview.jpg"],
     },
-
-    icons: { icon: "/favicon.ico" },
-    themeColor: "#ffffff",
+    icons: {
+        icon: "/favicon.ico",
+    },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

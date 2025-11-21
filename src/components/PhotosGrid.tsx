@@ -38,6 +38,8 @@ const GROUPS: { key: Photo["group_name"]; label: string }[] = [
     { key: "concept2",    label: "Nhóm ảnh concept 2" },
     { key: "traditional", label: "Nhóm ảnh cổ phục" },
     { key: "album",       label: "Nhóm ảnh album" },
+    { key: "ancestor_ceremony",       label: "Nhóm ảnh Lễ Gia Tiên" },
+    { key: "wedding-party",       label: "Nhóm ảnh Tiệc Cưới" },
     { key: "wedding", label: "Bộ ảnh cưới" },
 ];
 

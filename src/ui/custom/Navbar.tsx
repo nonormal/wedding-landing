@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 
 const GROUPS = [
+    { key: "ancestor_ceremony",       label: "Ảnh Lễ Gia Tiên" },
+    { key: "wedding-party",       label: "Ảnh Tiệc Cưới" },
     { key: "free",          label: "Nhà Hát Thành Phố" },
     { key: "concept1",      label: "Concept 1" },
     { key: "concept2",      label: "Concept 2" },

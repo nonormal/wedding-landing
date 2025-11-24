@@ -112,26 +112,28 @@ export default function GallerySection({
             </div>
 
             {count > 1 && (
-                <div className="mx-auto flex max-w-5xl items-center gap-3 px-4">
-                    {safePhotos.map((p, i) => (
-                        <button
-                            key={p.id}
-                            onClick={() => setIndex(i)}
-                            className={`h-16 w-24 overflow-hidden rounded-lg border transition
-                ${
-                                i === index
-                                    ? "ring-2 ring-black"
-                                    : "opacity-80 hover:opacity-100"
-                            }`}
-                        >
-                            <img
-                                src={p.url}
-                                alt=""
-                                className="h-full w-full object-cover"
-                                draggable={false}
-                            />
-                        </button>
-                    ))}
+                <div className="w-full overflow-x-auto overflow-y-hidden">
+                    <div className="mx-auto flex max-w-max items-center gap-3 px-4 py-2">
+                        {safePhotos.map((p, i) => (
+                            <button
+                                key={p.id}
+                                onClick={() => setIndex(i)}
+                                className={`shrink-0 h-16 w-24 overflow-hidden rounded-lg border transition
+                        ${
+                                    i === index
+                                        ? "ring-2 ring-black"
+                                        : "opacity-80 hover:opacity-100"
+                                }`}
+                            >
+                                <img
+                                    src={p.url}
+                                    alt=""
+                                    className="h-full w-full object-cover"
+                                    draggable={false}
+                                />
+                            </button>
+                        ))}
+                    </div>
                 </div>
             )}
         </div>
